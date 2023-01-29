@@ -4,8 +4,8 @@
     "front": "deno run -A --node-modules-dir npm:vite",
     "dev": "deno task api & deno task front",
     "dev:live": "VITE_COFFEE_API_URL=https://opencoffeedb.deno.dev/api deno task front",
-    "build": "deno run -A --unstable --node-modules-dir npm:vite build",
+    "build": "VITE_COFFEE_API_URL=https://opencoffeedb.deno.dev/api deno run -A --unstable --node-modules-dir npm:vite build",
     "preview": "deno run -A --unstable --node-modules-dir npm:vite preview",
-    "serve": "deno run --allow-net --allow-read https://deno.land/std@0.157.0/http/file_server.ts dist/"
+    "serve": "deno run --allow-net --allow-read https://deno.land/std@0.175.0/http/file_server.ts dist/"
   }
 }

@@ -1,45 +1,33 @@
 <script>
-import { ref } from 'vue'
 import { store } from '../store.js'
+import Coffee from './Coffee.vue';
+
 export default ({
+  components: {
+    Coffee
+  },
   async setup() {
     const res = await fetch(import.meta.env.VITE_COFFEE_API_URL || "http://localhost:8000/api")
     const coffees = await res.json();
-    return {
-      coffees
-    }
+    return { coffees }
   },
   data() {
-    return {
-      store
-    }
-  }
-})
+    return { store, showModal: false }
+  },
+});
 </script>
 
 <template>
-  <div class="container">
-    <div v-for="coffee in coffees" class="coffee-wrapper">
-      <span class="coffee">
-        <router-link :to="{ name: 'Coffee', params: { coffee: `${coffee.name.toLowerCase()}` }}">
-          <span @click="store.setCoffee(coffee.name, coffee.description.long)">
-            {{coffee.name}}
-          </span>
-        </router-link>
-      </span>
+  <h1>Coffees</h1>
+  <div class="coffee-tiles">
+    <div class="coffee" v-for="coffee in coffees" :key="coffee.id" @click="store.setCoffee(coffee); showModal = true">
+      <div>
+        <h3 class="name">{{ coffee.name }}</h3>
+        <p class="descriptionShort">{{ coffee.description.short }}</p>
+        <p class="origin">{{ coffee.origin.join(" / ") }}</p>
+        <p class="roastLevel">{{ coffee.roast_level }}</p>
+      </div>
     </div>
+      <Coffee v-if="showModal" @close="showModal = false" />
   </div>
 </template>
-
-<style scoped>
-.coffee {
-}
-.coffee-wrapper {
-  display: inline-block;
-  margin: 0.15rem 1rem;
-  padding: 0.15rem 1rem;
-}
-.container {
-  text-align: left;
-}
-</style>

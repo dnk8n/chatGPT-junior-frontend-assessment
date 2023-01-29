@@ -12,10 +12,12 @@ router
   })
   .get("/api/:coffee", (context) => {
     if (context?.params?.coffee) {
-      const found = data.find(item => item.name.toLowerCase() === context.params.coffee.toLowerCase());
+      const found = data.find((item) =>
+        item.name.toLowerCase() === context.params.coffee.toLowerCase()
+      );
       if (found) {
         context.response.body = found;
-        } else {
+      } else {
         context.response.body = "No coffee found.";
       }
     }
